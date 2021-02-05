@@ -4,7 +4,6 @@ require_once 'usecase.php';
 require_once 'repository.php';
 require_once 'presenter.php';
 
-
 class App
 {
     public function start(): void
