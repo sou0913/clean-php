@@ -1,5 +1,4 @@
 <?php
-// ユーザー保存（プログラム起動中）と一覧照会ができるようにする
 require_once 'controller.php';
 require_once 'usecase.php';
 require_once 'repository.php';
