@@ -1,6 +1,21 @@
 <?php
 
-class UserController
+class UserIndexController
+{
+    private UserIndexUseCaseInterface $interactor;
+
+    public function __construct(UserIndexUseCaseInterface $interactor)
+    {
+        $this->interactor = $interactor;
+    }
+
+    public function index()
+    {
+        $this->interactor->handle();
+    }
+}
+
+class UserCreateController
 {
     private UserCreateUseCaseInterface $interactor;
 
@@ -8,9 +23,10 @@ class UserController
     {
         $this->interactor = $interactor;
     }
-    public function create($user_name)
+
+    public function create($userName)
     {
-        $input_data = new UserCreateInputData($user_name);
-        $this->interactor->handle($input_data);
+        $inputData = new UserCreateInputData($userName);
+        $this->interactor->handle($inputData);
     }
 }

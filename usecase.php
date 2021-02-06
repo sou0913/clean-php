@@ -3,6 +3,28 @@
 require_once 'domain.php';
 require_once 'data_transfer_objects/input.php';
 
+interface UserIndexUseCaseInterface
+{
+    public function handle();
+}
+
+class UserIndexInteractor implements UserIndexUseCaseInterface
+{
+    private $userRepository;
+    private $presenter;
+    
+    public function __construct(UserRepositoryInterface $userRepository, UserIndexPresenter $presenter) {
+        $this->userRepository = $userRepository;
+        $this->presenter = $presenter;
+    }
+    
+    public function handle()
+    {
+        $users = $this->userRepository->all();
+        $outputData = new UserIndexOutputData($users);
+        $this->presenter->complete($outputData);
+    }
+}
 interface UserCreateUseCaseInterface
 {
     public function handle(UserCreateInputData $input);
@@ -24,7 +46,7 @@ class UserCreateInteractor implements UserCreateUseCaseInterface
         $user = new User($name);
         $this->userRepository->save($user);
 
-        $output_data = new UserCreateOutputData(new DateTime('now'));
-        $this->presenter->complete($output_data);
+        $outputData = new UserCreateOutputData(new DateTime('now'));
+        $this->presenter->complete($outputData);
     }
 }
