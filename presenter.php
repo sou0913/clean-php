@@ -2,6 +2,38 @@
 
 require_once 'data_transfer_objects/output.php';
 
+interface UserIndexPresenterInterface
+{
+    public function complete(UserIndexOutputData $outputData);
+}
+
+class UserIndexViewModel
+{
+    public $users;
+
+    public function __construct($users)
+    {
+        $this->users = $users;
+    }
+}
+
+class UserIndexPresenter implements UserIndexPresenterInterface
+{
+    public function complete(UserIndexOutputData $outputData)
+    {
+        $users = $outputData->users;
+        if (empty($users)) {
+            echo "ユーザーが登録されていません\n";
+        } else {
+            $model = new UserIndexViewModel($users);
+            echo "ユーザー一覧\n";
+            foreach ($model->users as $user) {
+                echo $user->name . "\n";
+            }
+        }
+    }
+}
+
 interface UserCreatePresenterInterface
 {
     public function complete(UserCreateOutputData $outputData);
